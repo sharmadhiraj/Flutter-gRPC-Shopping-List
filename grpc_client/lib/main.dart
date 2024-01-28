@@ -3,11 +3,11 @@ import 'package:grpc_client/screens/home.dart';
 import 'package:grpc_client/util/constants.dart';
 
 void main() {
-  runApp(const ShoppingListAPp());
+  runApp(const ShoppingListApp());
 }
 
-class ShoppingListAPp extends StatelessWidget {
-  const ShoppingListAPp({super.key});
+class ShoppingListApp extends StatelessWidget {
+  const ShoppingListApp({super.key});
 
   @override
   Widget build(BuildContext context) {
