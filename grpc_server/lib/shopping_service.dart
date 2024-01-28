@@ -7,31 +7,34 @@ class ShoppingService extends ShoppingServiceBase {
   @override
   Future<AddItemResponse> addItem(
       ServiceCall call, AddItemRequest request) async {
-    final item = request.item;
+    final String item = request.item;
+    print("Server received request to add item $item");
     shoppingList.add(item);
     return AddItemResponse()
       ..success = true
-      ..message = 'Item added successfully';
+      ..message = "Item added successfully";
   }
 
   @override
   Future<ListItemsResponse> listItems(
       ServiceCall call, ListItemsRequest request) async {
+    print("Server received request to get all items");
     return ListItemsResponse()..items.addAll(shoppingList);
   }
 
   @override
   Future<DeleteItemResponse> deleteItem(
       ServiceCall call, DeleteItemRequest request) async {
-    final item = request.item;
+    final String item = request.item;
+    print("Server received request to delete item $item");
     if (shoppingList.remove(item)) {
       return DeleteItemResponse()
         ..success = true
-        ..message = 'Item deleted successfully';
+        ..message = "Item deleted successfully";
     } else {
       return DeleteItemResponse()
         ..success = false
-        ..message = 'Item not found';
+        ..message = "Item not found";
     }
   }
 }
