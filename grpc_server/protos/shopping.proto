@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package flutter_grpc_shopping_list;
+
+service ShoppingService {
+  rpc AddItem (AddItemRequest) returns (AddItemResponse);
+  rpc ListItems (ListItemsRequest) returns (ListItemsResponse);
+  rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse);
+}
+
+message AddItemRequest {
+  string item = 1;
+}
+
+message AddItemResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ListItemsRequest {}
+
+message ListItemsResponse {
+  repeated string items = 1;
+}
+
+message DeleteItemRequest {
+  string item = 1;
+}
+
+message DeleteItemResponse {
+  bool success = 1;
+  string message = 2;
+}
