@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grpc_client/services/shopping.dart';
 import 'package:grpc_client/util/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +12,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _itemController = TextEditingController();
   final List<String> _shoppingList = [];
+  final ShoppingService _shoppingService = ShoppingService();
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshItems();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   AppBar _buildAppBar() {
-    return AppBar(title: const Text(Constant.appName));
+    return AppBar(
+      title: const Text(Constant.appName),
+      actions: [
+        IconButton(
+          onPressed: () => _refreshItems(),
+          icon: const Icon(Icons.refresh),
+        )
+      ],
+    );
   }
 
   Widget _buildBody() {
@@ -51,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(
           width: double.maxFinite,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: _addItem,
             child: const Text("Add Item"),
           ),
         ),
@@ -76,8 +92,35 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(item),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () {},
+        onPressed: () => _deleteItem(item),
       ),
     );
+  }
+
+  void _addItem() {
+    final String item = _itemController.text.trim();
+    if (item.isEmpty) return;
+    _shoppingService.addItem(item);
+    _itemController.clear();
+    _refreshItems();
+  }
+
+  void _deleteItem(String item) {
+    _shoppingService.deleteItem(item);
+    _refreshItems();
+  }
+
+  void _refreshItems() {
+    _shoppingService.listItems().then((value) => setState(() {
+          _shoppingList
+            ..clear()
+            ..addAll(value);
+        }));
+  }
+
+  @override
+  void dispose() {
+    _shoppingService.dispose();
+    super.dispose();
   }
 }
