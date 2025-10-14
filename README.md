@@ -1,6 +1,6 @@
 # Flutter gRPC Shopping List
 
-Welcome to the Flutter gRPC Shopping List project! This project is designed to explore gRPC communication between a Dart gRPC server and a Flutter client. The primary focus is on creating a simple shopping list application usin gRPC.
+Welcome to the Flutter gRPC Shopping List project! This project is designed to explore gRPC communication between a Dart gRPC server and a Flutter client. The primary focus is on creating a simple shopping list application using gRPC.
 
 ## Overview
 
