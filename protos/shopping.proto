@@ -3,31 +3,45 @@ syntax = "proto3";
 package flutter_grpc_shopping_list;
 
 service ShoppingService {
-  rpc AddItem (AddItemRequest) returns (AddItemResponse);
+  rpc AddItem (AddItemRequest) returns (Item);
   rpc ListItems (ListItemsRequest) returns (ListItemsResponse);
+  rpc SetBought (SetBoughtRequest) returns (Item);
   rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse);
+  rpc ClearBought (ClearBoughtRequest) returns (ClearBoughtResponse);
+  rpc WatchItems (WatchItemsRequest) returns (stream ListItemsResponse);
+}
+
+message Item {
+  int32 id = 1;
+  string name = 2;
+  bool bought = 3;
 }
 
 message AddItemRequest {
-  string item = 1;
-}
-
-message AddItemResponse {
-  bool success = 1;
-  string message = 2;
+  string name = 1;
 }
 
 message ListItemsRequest {}
 
 message ListItemsResponse {
-  repeated string items = 1;
+  repeated Item items = 1;
+}
+
+message SetBoughtRequest {
+  int32 id = 1;
+  bool bought = 2;
 }
 
 message DeleteItemRequest {
-  string item = 1;
+  int32 id = 1;
 }
 
-message DeleteItemResponse {
-  bool success = 1;
-  string message = 2;
+message DeleteItemResponse {}
+
+message ClearBoughtRequest {}
+
+message ClearBoughtResponse {
+  int32 removed = 1;
 }
+
+message WatchItemsRequest {}

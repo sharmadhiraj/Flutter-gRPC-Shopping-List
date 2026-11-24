@@ -1,13 +1,15 @@
 name: grpc_server
-description: A sample command-line application.
-version: 1.0.0
+description: In-memory gRPC shopping list server for the Flutter gRPC Shopping List demo.
+publish_to: none
+version: 2.0.0
 
 environment:
-  sdk: ^3.2.3
+  sdk: ^3.8.0
 
 dependencies:
-  protobuf: ^3.1.0
-  grpc: ^3.2.4
+  grpc: ^5.0.0
+  protobuf: ^6.1.0
 
 dev_dependencies:
-  lints: ^2.1.0
+  lints: ^6.0.0
+  test: ^1.25.0

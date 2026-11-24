@@ -1,20 +1,14 @@
-# Flutter gRPC Shopping List - Dart gRPC Server
+# gRPC Shopping List: Server
 
-## Setup Guide
+In-memory Dart gRPC server for the shopping list. The list resets when the server stops.
 
-1. Install Dart on your system.
+```sh
+dart pub get
+dart run bin/server.dart          # port 50051
+dart run bin/server.dart 6000     # custom port
+dart test
+```
 
-2. Follow the [gRPC Dart Quick Start guide](https://grpc.io/docs/languages/dart/quickstart/) for
-   setup.
+`lib/shopping_service.dart` implements the generated `ShoppingServiceBase`. `WatchItems` is a broadcast stream: every change pushes the full list to all watchers.
 
-## How it Works
-
-1. Proto *shopping.proto* is converted to Dart Code:
-   `
-   protoc --dart_out=grpc:lib/generated/shopping -Iprotos ../protos/shopping.proto
-   `
-
-2. gRPC service in *lib/shopping_service.dart* is implemented using generated code
-
-3. Server is configured in *lib/main.dart*, which can be run using command:
-   `dart lib/main.dart`
+See the [root README](../README.md) for the RPC list and how to regenerate code.
