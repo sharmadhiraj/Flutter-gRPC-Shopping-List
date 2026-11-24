@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grpc_server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.13.7
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed bin test lib/shopping_service.dart
+      - run: dart analyze
+      - run: dart test
+
+  client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grpc_client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib/main.dart lib/data lib/features test
+      - run: flutter analyze
+      - run: flutter test
