@@ -5,6 +5,28 @@ A shopping list that shows gRPC end to end: a Dart gRPC server, a Flutter client
 
 ![Demo](docs/demo.gif)
 
+## How gRPC works
+
+- **gRPC** (gRPC Remote Procedure Calls) lets one program call a function in another program over
+  the network, as if it were a local method call. Each such call is an **RPC** (Remote Procedure
+  Call).
+- **Proto file**: the contract. It lists the available calls (RPCs) and the shape of each request
+  and response. Both sides are generated from it, so they always agree.
+- **Server**: implements those calls (here, in Dart) and keeps the data.
+- **Client**: calls them through generated code (here, the Flutter app) and shows the result.
+
+```
+ shopping.proto
+   |  generates Dart code for both sides
+   v
+ Flutter client  --- request ------>  Dart server
+ (calls RPCs)    <-- response ------  (implements RPCs)
+                 <== stream ========  (pushes list updates)
+```
+
+Most calls are one request and one response. `WatchItems` is a server stream: the client asks once
+and the server keeps sending the updated list.
+
 ## Features
 
 - Add, check off and delete items
