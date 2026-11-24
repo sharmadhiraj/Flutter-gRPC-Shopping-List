@@ -1,20 +1,16 @@
-# Flutter gRPC Shopping List - Flutter gRPC Client
+# gRPC Shopping List: Client
 
-## Setup Guide
+Flutter app (macOS, iOS, Android) for the shopping list.
 
-1. Install Dart on your system.
+```sh
+flutter pub get
+flutter run
+flutter run --dart-define=SERVER_HOST=192.168.1.20 --dart-define=SERVER_PORT=50051
+flutter test
+```
 
-2. Follow the [gRPC Dart Quick Start guide](https://grpc.io/docs/languages/dart/quickstart/) for
-   setup.
+- `lib/data/shopping_client.dart`: wraps the generated gRPC stub
+- `lib/data/server_endpoint.dart`: host and port (`localhost`, or `10.0.2.2` on Android)
+- `lib/features/shopping/`: screen and widgets, driven by the `WatchItems` stream
 
-## How it Works
-
-1. Proto *shopping.proto* is converted to Dart Code:
-   `
-   protoc --dart_out=grpc:lib/generated/shopping -Iprotos ../protos/shopping.proto
-   `
-
-2. gRPC service in *lib/services/shopping.dart* is implemented using generated code. This service is
-   used to connect to server and perform operations.
-
-3. Shopping screen/UI used methods from ShoppingService
+Start the server first, see the [root README](../README.md).

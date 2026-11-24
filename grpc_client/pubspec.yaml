@@ -1,18 +1,21 @@
 name: grpc_client
-description: "Exploring gRPC communication between a gRPC server and a Flutter client for managing a simple shopping list."
-publish_to: 'none'
-version: 1.0.0+1
+description: Flutter shopping list that talks to a Dart gRPC server, with live updates over a server stream.
+publish_to: none
+version: 2.0.0+1
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: ^3.8.0
 
 dependencies:
   flutter:
     sdk: flutter
-  grpc: ^3.2.4
+  grpc: ^5.0.0
+  protobuf: ^6.1.0
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
